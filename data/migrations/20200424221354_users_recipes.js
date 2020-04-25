@@ -5,6 +5,11 @@ exports.up = function (knex) {
 
       users.string("username", 255).notNullable().unique();
       users.string("password", 255).notNullable();
+      users
+        .integer("favorite_recipe_id")
+        .unsigned()
+        .notNullable()
+        .references("recipes.id");
     })
     .createTable("recipes", (tbl) => {
       tbl.increments();
@@ -42,6 +47,28 @@ exports.up = function (knex) {
         .unsigned()
         .notNullable()
         .references("ingrediants.id");
+    })
+    .createTable("user_recipe_ratings", (tbl) => {
+      tbl.increments();
+      tbl
+        .integer("recipes_id")
+        .unsigned()
+        .notNullable()
+        .references("recipes.id")
+        .onUpdate("CASCADE")
+        .onDelete("CASCADE");
+
+      tbl
+        .integer("user_id")
+        .unsigned()
+        .notNullable()
+        .references("users.id")
+        .onUpdate("CASCADE")
+        .onDelete("CASCADE");
+
+      tbl.integer("rating").unsigned().notNullable();
+
+      tbl.unique(["recipes_id", "user_id"]);
     });
 };
 
