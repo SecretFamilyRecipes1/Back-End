@@ -4,9 +4,9 @@ module.exports = {
     connection: { filename: "./database/auth.db3" },
     useNullAsDefault: true,
     migrations: {
-      directory: "./database/migrations",
+      directory: "./data/migrations",
       tableName: "dbmigrations",
     },
-    seeds: { directory: "./database/seeds" },
+    seeds: { directory: "./data/seeds" },
   },
 };
