@@ -8,8 +8,18 @@ const router = express.Router();
 router.get("/", (req, res) => {
   recipes
     .find()
-    .then((recipe) => {
-      res.json(recipe);
+    .then((rec) => {
+      res.json({
+        recipe: rec,
+        step: rec.forEach((r) => {
+          let result = async () => {
+            const answer = await recipes.findSteps(r.id);
+            console.log(answer);
+            return answer;
+          };
+          r.steps = result();
+        }),
+      });
     })
     .catch((err) => {
       res.status(500).json({ message: "Failed to get recipes", err });

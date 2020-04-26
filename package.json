@@ -4,6 +4,7 @@
   "description": "Family Cookbook API",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "server": "nodemon index.js",
     "test": "jest --watch"
   },
