@@ -90,9 +90,7 @@ router.post("/add_recipe", (req, res) => {
   recipes
     .add(req.body)
     .then((recipe) => {
-      recipe
-        ? res.json(recipe)
-        : res.status(404).json({ msg: "could not find recipe to add" });
+      res.json(recipe);
     })
     .catch((err) => {
       res
