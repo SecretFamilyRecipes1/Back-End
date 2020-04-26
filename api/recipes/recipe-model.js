@@ -39,7 +39,7 @@ function getFavoriteList(user_id) {
 
 function add(recipe) {
   return db("recipes")
-    .insert(recipe)
+    .insert(recipe, "id")
     .then((ids) => {
       const [id] = ids;
 
