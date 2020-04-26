@@ -48,7 +48,7 @@ function add(recipe) {
 }
 function addStep(step) {
   return db("steps")
-    .insert(step)
+    .insert(step, "id")
     .then((ids) => {
       return getStepId(ids[0]);
     });
@@ -56,7 +56,7 @@ function addStep(step) {
 
 function addIngrediant(ingrediant) {
   return db("ingrediants")
-    .insert(ingrediant)
+    .insert(ingrediant, "id")
     .then((ids) => {
       return findIngrediantId(ids[0]);
     });
@@ -64,7 +64,7 @@ function addIngrediant(ingrediant) {
 
 function addFavorite(fav) {
   return db("user_recipe_favorites")
-    .insert(fav)
+    .insert(fav, "id")
     .then((ids) => {
       return findFavId(ids[0]);
     });
