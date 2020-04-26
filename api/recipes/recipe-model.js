@@ -41,7 +41,9 @@ function add(recipe) {
   return db("recipes")
     .insert(recipe)
     .then((ids) => {
-      return findById(ids[0]);
+      const [id] = ids;
+
+      return findById(id);
     });
 }
 function addStep(step) {
