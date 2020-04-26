@@ -5,21 +5,16 @@ exports.up = function (knex) {
 
       users.string("username", 255).notNullable().unique();
       users.string("password", 255).notNullable();
-      users
-        .integer("favorite_recipe_id")
-        .unsigned()
-        .notNullable()
-        .references("recipes.id");
     })
     .createTable("recipes", (tbl) => {
       tbl.increments();
       tbl.integer("user_id").unsigned().notNullable().references("users.id");
       tbl.text("recipe_name", 128).notNullable();
       tbl.text("description", 800).notNullable();
-      tbl.text("prep time", 128);
-      tble.text("cook time", 128);
-      tble.text("serving size", 128);
-      tbl.string("image filepath", 255);
+      tbl.text("prep_time", 128);
+      tbl.text("cook_time", 128);
+      tbl.text("serving_size", 128);
+      tbl.string("image_url");
     })
     .createTable("ingrediants", (tbl) => {
       tbl.increments();
@@ -41,12 +36,6 @@ exports.up = function (knex) {
         .unsigned()
         .notNullable()
         .references("recipes.id");
-
-      tbl
-        .integer("ingrediants_id")
-        .unsigned()
-        .notNullable()
-        .references("ingrediants.id");
     })
     .createTable("user_recipe_ratings", (tbl) => {
       tbl.increments();
@@ -69,9 +58,36 @@ exports.up = function (knex) {
       tbl.integer("rating").unsigned().notNullable();
 
       tbl.unique(["recipes_id", "user_id"]);
+    })
+
+    .createTable("user_recipe_favorites", (tbl) => {
+      tbl.increments();
+      tbl
+        .integer("recipes_id")
+        .unsigned()
+        .notNullable()
+        .references("recipes.id")
+        .onUpdate("CASCADE")
+        .onDelete("CASCADE");
+
+      tbl
+        .integer("user_id")
+        .unsigned()
+        .notNullable()
+        .references("users.id")
+        .onUpdate("CASCADE")
+        .onDelete("CASCADE");
+
+      tbl.unique(["recipes_id", "user_id"]);
     });
 };
 
 exports.down = function (knex) {
-  return knex.schema.dropTableIfExists("users");
+  return knex.schema
+    .dropTableIfExists("user_recipe_favorites")
+    .dropTableIfExists("user_recipe_ratings")
+    .dropTableIfExists("steps")
+    .dropTableIfExists("ingrediants")
+    .dropTableIfExists("recipes")
+    .dropTableIfExists("users");
 };

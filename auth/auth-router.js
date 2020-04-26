@@ -43,4 +43,35 @@ router.post("/login", (req, res) => {
     });
 });
 
+router.delete("/delete_user/:id", (req, res) => {
+  Users.remove(req.params.id)
+    .then((deleted) => {
+      deleted
+        ? res.json({ removed: deleted })
+        : res
+            .status(404)
+            .json({ message: "Could not find user with given id" });
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Failed to delete user", err });
+    });
+});
+
+router.put("/edit_user/:id", (req, res) => {
+  const { id } = req.params;
+  let updatedUser = req.body;
+  updatedUser.id = id;
+  const hash = bcrypt.hashSync(updatedUser.password, 8);
+  updatedUser.password = hash;
+  Users.editUser(req.body, req.params.id)
+    .then((updated) => {
+      res.status(200).json({ msg: "update successful", updated });
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .json({ msg: "An error occured while updating account", err });
+    });
+});
+
 module.exports = router;

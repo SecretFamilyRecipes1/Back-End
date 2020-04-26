@@ -1,11 +1,10 @@
 module.exports = {
   development: {
     client: "sqlite3",
-    connection: { filename: "./database/auth.db3" },
+    connection: { filename: "./data/cookbook.db3" },
     useNullAsDefault: true,
     migrations: {
       directory: "./data/migrations",
-      tableName: "dbmigrations",
     },
     seeds: { directory: "./data/seeds" },
   },
