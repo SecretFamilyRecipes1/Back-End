@@ -31,6 +31,7 @@ router.post("/login", (req, res) => {
         const token = jwt.sign(payload, process.env.JWT_SECRET);
         //res.cookie("token", token); //to send the token as cookie
         res.status(200).json({
+          id: user.id,
           message: `Welcome ${user.username}!`,
           token: token,
         });
