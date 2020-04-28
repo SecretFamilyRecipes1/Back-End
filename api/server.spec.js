@@ -89,14 +89,14 @@ describe("server", function () {
       });
   });
 
-  it("Should fetch a list of recipes after login ", async function () {
+  it("GET request after validation should produce valid response ", async function () {
     let toke = "";
     await request(server)
       .post("/api/auth/register")
-      .send({ username: "username9", password: "test9" });
+      .send({ username: "username99", password: "test9" });
     await request(server)
       .post("/api/auth/login")
-      .send({ username: "usernam9", password: "test9" })
+      .send({ username: "usernam99", password: "test9" })
       .then((res) => {
         token = res.body.token;
         return token;
